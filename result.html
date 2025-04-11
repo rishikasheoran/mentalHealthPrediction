@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #2E3192, #1BFFFF);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    
+    .container {
+        max-width: 550px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+
+    .greeting {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+
+    .result-box {
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+  
+    .low-risk { background: linear-gradient(135deg, #28a745, #34d058); } 
+    .moderate-risk { background: linear-gradient(135deg, #ff9800, #ffcc80); } 
+    .high-risk { background: linear-gradient(135deg, #dc3545, #ff6b6b); } 
+
+
+    .advice-box {
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 15px;
+    }
+
+   
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, #007BFF, #0056b3);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 5px 20px rgba(0, 123, 255, 0.3);
+    }
+
+    .back-link:hover {
+        background: linear-gradient(135deg, #0056b3, #003f7f);
+        transform: scale(1.05);
+    }
+
+</style>
+
+<div class="container">
+    <p class="greeting">Hello, {{ username }}! 🖐️</p>
+
+    <p>Based on your responses, your mental health status is:</p>
+
+    <div class="result-box 
+        {% if prediction == 2 %} high-risk
+        {% elif prediction == 1 %} moderate-risk
+        {% else %} low-risk {% endif %}">
+        {{ health_status }}
+    </div>
+
+    <div class="advice-box">
+        <strong>📝 Recommendation:</strong>  
+        <p>{{ advice }}</p>
+    </div>
+
+    <a href="{% url 'predict' %}" class="back-link">Take Another Test</a>
+</div>
+
+{% endblock %}

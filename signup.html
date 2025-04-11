@@ -1,0 +1,136 @@
+x{% extends 'base.html' %}
+
+{% block title %}Signup Page{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background-color: #080710;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Navbar Fix */
+   
+
+    /* Form Centering */
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: fixed;
+        margin-left : 50%;
+        margin-right: 50% ;
+        margin-bottom: 15%;
+        margin-top: 5%;
+    
+    
+
+    }
+
+    .form-box {
+        width: 400px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-box h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        color: white;
+    }
+
+    /* Reserve space for error messages */
+    .error {
+        color: red;
+        font-size: 12px;
+        text-align: left;
+        min-height: 16px; /* Prevents shifting */
+        margin-bottom: 5px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff9800;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .a1 {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        display: block;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <form class="form-box" action="" method="post">
+        {% csrf_token %}
+        <h3>Signup Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Enter your username" name="username" id="username" required>
+        {% if errors.username %}
+            <p class="error">{{ errors.username }}</p>
+        {% endif %}
+
+        <label for="email">Email</label>
+        <input type="email" placeholder="Enter your email" name="email" id="email" required>
+        {% if errors.email %}
+            <p class="error">{{ errors.email }}</p>
+        {% endif %}
+
+        <label for="password1">Password</label>
+        <input type="password" placeholder="Enter password" id="password1" name="password1" required>
+
+        <label for="password2">Confirm Password</label>
+        <input type="password" placeholder="Confirm password" id="password2" name="password2" required>
+        {% if errors.password %}
+            <p class="error">{{ errors.password }}</p>
+        {% endif %}
+
+        <button type="submit">Signup</button>
+
+        <a class="a1" href="{% url 'login' %}">I already have an account</a>
+    </form>
+</div>
+
+{% endblock %}

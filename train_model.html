@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+   
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: url('https://media.istockphoto.com/id/2148483717/photo/grief-and-mental-illness-expression-unhappy-man-with-covered-face-with-his-hand.jpg?s=1024x1024&w=is&k=20&c=uI4n-wg_QNQBLLt3uzglECgPFO1WPa7tl-00wX5gf58=') no-repeat center center/cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    
+    .container {
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(12px);
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+
+    .status-box {
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 15px;
+    }
+
+   
+    .success {
+        background: linear-gradient(135deg, #28a745, #34d058);
+        color: white;
+    }
+
+
+    .error {
+        background: linear-gradient(135deg, #dc3545, #ff6b6b);
+        color: white;
+    }
+
+
+    .btn-container {
+        margin-top: 20px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-train {
+        background: linear-gradient(135deg, #4CAF50, #3e8e41);
+        color: white;
+    }
+
+    .btn-train:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-predict {
+        background: linear-gradient(135deg, #007BFF, #0056b3);
+        color: white;
+    }
+
+    .btn-predict:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+</style>
+
+<div class="container">
+    <p class="title">Train Your Model</p>
+
+    {% if success %}
+        <div class="status-box success">Training completed successfully!</div>
+        <div class="btn-container">
+            <a href="{% url 'predict' %}" class="btn btn-predict">Go to Prediction</a>
+        </div>
+    {% elif error %}
+        <div class="status-box error"> {{ error }}</div>
+    {% else %}
+        <div class="btn-container">
+            <form action="{% url 'train_model' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-train">Train Model</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
