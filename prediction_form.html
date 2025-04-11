@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url('https://media.istockphoto.com/id/2148483717/photo/grief-and-mental-illness-expression-unhappy-man-with-covered-face-with-his-hand.jpg?s=1024x1024&w=is&k=20&c=uI4n-wg_QNQBLLt3uzglECgPFO1WPa7tl-00wX5gf58=') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+    }
+
+    .form-box {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .form-box:hover {
+        transform: scale(1.03);
+    }
+
+    form {
+        background: rgba(255, 255, 255, 0.3);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.3);
+        color: black;
+        outline: none;
+        transition: box-shadow 0.3s ease-in-out;
+        backdrop-filter: blur(10px);
+        box-sizing: border-box !important;
+    }
+
+    input:focus,
+    select:focus {
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        background: white;
+    }
+
+    button {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        font-size: 18px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 12px;
+        color: white;
+    }
+</style>
+
+<div class="container">
+    <div class="form-box">
+        <form method="POST" action="{% url 'predict' %}">
+            {% csrf_token %}
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+                <option value="2">Other</option>
+            </select>
+
+            <label for="occupation">Occupation:</label>
+            <select id="occupation" name="occupation" required>
+                <option value="0">Student</option>
+                <option value="1">Employee</option>
+                <option value="2">Self-employed</option>
+                <option value="3">Unemployed</option>
+            </select>
+
+            <label for="sleep_duration">Sleep Duration (hours per night):</label>
+            <input type="number" id="sleep_duration" name="sleep_duration" step="0.1" min="0" required>
+
+            <label for="physical_activity">Physical Activity Level:</label>
+            <select id="physical_activity" name="physical_activity" required>
+                <option value="0">Low</option>
+                <option value="1">Moderate</option>
+                <option value="2">High</option>
+            </select>
+
+            <label for="screen_time">Screen Time (hours per day):</label>
+            <input type="number" id="screen_time" name="screen_time" step="0.1" min="0" required>
+
+            <label for="stress_level">Work/Study Stress Level (1-10):</label>
+            <input type="number" id="stress_level" name="stress_level" min="1" max="10" required>
+
+            <label for="mood_swings">Mood Swings (1-10):</label>
+            <input type="number" id="mood_swings" name="mood_swings" min="1" max="10" required>
+
+            <label for="concentration">Concentration Level (1-10):</label>
+            <input type="number" id="concentration" name="concentration" min="1" max="10" required>
+
+            <label for="happiness_level">Happiness Level (1-10):</label>
+            <input type="number" id="happiness_level" name="happiness_level" min="1" max="10" required>
+
+            <label for="social_interaction">Social Interaction Level (1-10):</label>
+            <input type="number" id="social_interaction" name="social_interaction" min="1" max="10" required>
+
+            <label for="headaches">Frequent Headaches:</label>
+            <select id="headaches" name="headaches" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="headaches">Headaches:</label>
+            <select id="headaches" name="headaches" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+            <label for="work_hours">Work/Study Hours per Day:</label>
+            <input type="number" id="work_hours" name="work_hours" step="0.1" min="0" required>
+
+            <label for="anxiety_symptoms">Anxiety Symptoms:</label>
+            <select id="anxiety_symptoms" name="anxiety_symptoms" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="depressive_feelings">Depressive Feelings:</label>
+            <select id="depressive_feelings" name="depressive_feelings" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="suicidal_thoughts">Suicidal Thoughts:</label>
+            <select id="suicidal_thoughts" name="suicidal_thoughts" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="family_history">Family History of Mental Health Issues:</label>
+            <select id="family_history" name="family_history" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <button type="submit">Predict Mental Health</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
