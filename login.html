@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background-color: #080710;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: fixed;
+        margin-left : 50%;
+        margin-right: 50% ;
+        margin-bottom: 15%;
+        margin-top: 5%;
+    }
+
+    .form-box {
+      width: 400px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+  }
+
+    .form-box h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: white;
+        font-weight: bold;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 14px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+  }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff9800;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    .a1 {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <form class="form-box" action="" method="post">
+        {% csrf_token %}
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Enter your username" name="username" id="username" required>
+        {% if errors.username %}
+            <p  style=""  class="error">{{ errors.username }}</p>
+        {% endif %}
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Enter password" id="password" name="password" required>
+        {% if errors.password %}
+          <p class="error">{{ errors.password }}</p>
+        {% endif %}
+
+
+        <button type="submit">Login</button>
+
+        <a class="a1" href="{% url 'signup' %}">Don't have an account? Signup</a>
+    </form>
+</div>
+
+{% endblock %}
